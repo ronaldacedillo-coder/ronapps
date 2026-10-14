@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RonApps — Software that runs the business</title>
+<meta name="description" content="RonApps builds practical apps for commercial HVAC teams, learning and everyday life.">
+<meta property="og:title" content="RonApps">
+<meta property="og:description" content="Software that runs the business. Apps for commercial HVAC teams, learning and everyday life.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='8' y='64' width='26' height='26' fill='%232F7A72'/%3E%3Crect x='37' y='37' width='26' height='26' fill='%232F7A72' opacity='.7'/%3E%3Crect x='66' y='10' width='26' height='26' fill='%232F7A72' opacity='.42'/%3E%3C/svg%3E">
+<style>html,body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single dark graphite world. Generative "rising squares" hero (from the RonApps mark), marquee, then a work index where every app gets its own animated diagram, an ecosystem map, timeline, short credit. */
+:root{
+  --bg:#F5F4F0; --panel:#FFFFFF; --panel2:#FFFFFF; --rule:#E3E1DA; --rule2:#C9C6BC;
+  --fg:#111111; --fg2:#45443F; --fg3:#7C7A72;
+  --accent:#2F7A72; --accent2:#0FA597; --accent-dim:color-mix(in srgb,var(--accent) 16%,#fff);
+  --teal:#2F7A72; --cobalt:#55657A; --coral:#B0705A; --sun:#C2A36B; --pink:#A88486; --green:#7A8F7C; --orange:#9C7B5B; --red:#8E5A55; --ink:#1A1A1A;
+  --display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter Tight","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --max:1240px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font-family:var(--display);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{text-wrap:balance}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg3)}
+
+/* Header */
+.top{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);z-index:30;mix-blend-mode:normal}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-.02em}
+.brand svg{width:22px;height:22px}
+.top nav{display:flex;gap:6px}
+.top nav a{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg2);padding:8px 12px;border:1px solid var(--rule2);border-radius:99px;background:rgba(247,246,242,.85);transition:color .2s,border-color .2s}
+.top nav a:hover{color:var(--fg);border-color:var(--accent)}
+@media(max-width:520px){.top nav a.opt{display:none}}
+
+/* Hero */
+.hero{position:relative;min-height:min(820px,100svh);display:flex;align-items:flex-end;overflow:hidden;border-bottom:1px solid var(--rule)}
+#art{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .wrap{position:relative;width:100%;padding-block:140px 56px}
+.hero h1{font-size:clamp(64px,17vw,196px);line-height:.86;font-weight:800;letter-spacing:-.06em}
+.hero h1 .o{color:transparent;-webkit-text-stroke:1.5px var(--fg)}
+.hero-foot{margin-top:40px;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.hero-foot p.l{font-size:clamp(18px,2vw,22px);color:var(--fg2);max-width:22em;line-height:1.35}
+.hero-foot p.l b{color:var(--fg);font-weight:600}
+.kpis{display:flex;gap:40px}
+.kpi b{display:block;font-size:clamp(36px,4.5vw,56px);font-weight:700;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.kpi b i{font-style:normal;color:var(--accent)}
+.kpi span{display:block;margin-top:8px}
+.hero .in{animation:up 1s cubic-bezier(.2,.7,.1,1) both}
+.hero .in.d2{animation-delay:.12s}.hero .in.d3{animation-delay:.24s}
+@keyframes up{from{transform:translateY(28px);opacity:.001}to{transform:none;opacity:1}}
+
+/* Marquee */
+.marquee{border-bottom:1px solid var(--rule);overflow:hidden;padding-block:22px;white-space:nowrap}
+.marquee .track{display:inline-flex;gap:48px;animation:mq 40s linear infinite;padding-left:48px}
+.marquee span{font-size:clamp(22px,3vw,34px);font-weight:600;letter-spacing:-.03em;color:var(--fg3);display:inline-flex;align-items:center;gap:48px}
+.marquee span::after{content:"";width:10px;height:10px;background:var(--accent);display:inline-block}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* Section heads */
+.sec{padding-block:120px 40px}
+.sec-h{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:56px}
+.sec-h h2{font-size:clamp(44px,8vw,112px);font-weight:800;letter-spacing:-.055em;line-height:.9}
+.sec-h h2 sup{font-family:var(--mono);font-size:.18em;font-weight:500;letter-spacing:0;color:var(--accent);vertical-align:top;margin-left:8px;position:relative;top:.6em}
+
+/* Work rows */
+.work{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;padding-block:56px;border-top:1px solid var(--rule);align-items:center}
+.work:nth-child(even) .vis{order:-1}
+.w-num{font-size:clamp(64px,9vw,120px);font-weight:800;letter-spacing:-.06em;line-height:.8;color:transparent;-webkit-text-stroke:1px var(--rule2);transition:-webkit-text-stroke-color .4s}
+.work:hover .w-num{-webkit-text-stroke-color:var(--accent)}
+.w-name{margin-top:28px;font-size:clamp(28px,3.4vw,44px);font-weight:700;letter-spacing:-.04em;line-height:1.02}
+.w-line{margin-top:14px;font-size:18px;color:var(--fg2);line-height:1.4;max-width:24em}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2);border:1px solid var(--rule2);padding:6px 10px;border-radius:99px}
+.tag.live{color:var(--bg);background:var(--accent);border-color:var(--accent);font-weight:500}
+.tag.live::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--bg);margin-right:7px;vertical-align:1px;animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+.w-link{display:inline-flex;align-items:center;gap:10px;margin-top:28px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg)}
+.w-link i{display:inline-block;width:28px;height:1px;background:var(--accent);transition:width .3s}
+.w-link:hover i{width:48px}
+
+.soon .w-num{-webkit-text-stroke-color:var(--accent)}
+.soon-tag{color:var(--accent);border-color:var(--accent);border-style:dashed}
+.vis{position:relative;background:var(--panel);border:1px solid var(--rule);border-radius:4px;aspect-ratio:10/7;max-width:100%;overflow:hidden;transition:border-color .4s}
+.work:hover .vis{border-color:var(--rule2)}
+.vis svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.vis .cap{position:absolute;left:16px;top:14px;z-index:1}
+.vis::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);background-size:40px 40px;opacity:.35;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%)}
+@media(max-width:860px){.work{grid-template-columns:1fr;gap:28px;padding-block:44px}.work:nth-child(even) .vis{order:0}.w-num{font-size:64px}}
+
+/* SVG vocabulary */
+svg text{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;fill:var(--fg2)}
+svg .t3{fill:var(--fg3)}
+svg .tw{fill:var(--fg)}
+svg .ta{fill:var(--accent)}
+.st{stroke:var(--rule2);fill:none;stroke-width:1}
+.st2{stroke:var(--fg3);fill:none;stroke-width:1}
+.sa{stroke:var(--accent);fill:none;stroke-width:2}
+.fa{fill:var(--accent)}
+.fp{fill:var(--panel2);stroke:var(--rule2)}
+.flow{stroke-dasharray:6 8;animation:flow 1.2s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-14}}
+.pulse{animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+
+/* Scroll-driven reveals (progressive; static if unsupported) */
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+    .grow{transform-box:fill-box;transform-origin:left center;animation:grow linear both;animation-timeline:view();animation-range:entry 10% cover 40%}
+    .draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw linear both;animation-timeline:view();animation-range:entry 10% cover 45%}
+    .ring{animation:ring linear both;animation-timeline:view();animation-range:entry 10% cover 45%}
+    .pop{transform-box:fill-box;transform-origin:center;animation:pop linear both;animation-timeline:view();animation-range:entry 15% cover 40%}
+  }
+}
+@keyframes rv{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes ring{from{stroke-dashoffset:var(--o)}to{stroke-dashoffset:0}}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* Ecosystem */
+.eco{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:48px;align-items:center}
+.eco p.l{font-size:clamp(22px,2.6vw,32px);font-weight:600;letter-spacing:-.03em;line-height:1.15}
+.eco p.l em{font-style:normal;color:var(--accent)}
+.eco .vis{aspect-ratio:12/8}
+@media(max-width:860px){.eco{grid-template-columns:1fr}.eco .vis{aspect-ratio:10/9}}
+
+/* Timeline */
+.tl{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid var(--rule2)}
+.tl::before{content:"";position:absolute;top:-1px;left:0;height:1px;width:100%;background:var(--accent);transform-origin:left}
+@supports (animation-timeline:view()){@media (prefers-reduced-motion:no-preference){.tl::before{animation:grow linear both;animation-timeline:view();animation-range:entry 20% cover 50%}}}
+.tl > div{padding:28px 16px 0 0;position:relative}
+.tl > div::before{content:"";position:absolute;top:-6px;left:0;width:11px;height:11px;background:var(--bg);border:2px solid var(--accent)}
+.tl .m{font-size:clamp(28px,3.4vw,44px);font-weight:700;letter-spacing:-.04em}
+.tl .nx .m{color:var(--accent)}.tl .nx::before{border-style:dashed;background:var(--accent-dim)}
+.tl ul{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;color:var(--fg2);font-size:15px}
+@media(max-width:760px){.tl{grid-template-columns:1fr;border-top:0;border-left:1px solid var(--rule2);margin-left:5px}.tl::before{display:none}.tl > div{padding:0 0 32px 28px}.tl > div::before{top:10px;left:-7px}.tl .m{font-size:30px}}
+
+/* Credit */
+.credit{display:grid;grid-template-columns:auto minmax(0,1fr);gap:40px;align-items:center;padding-block:56px;border-top:1px solid var(--rule)}
+.credit .mark{width:120px;height:120px}
+.credit p.l{font-size:clamp(22px,2.8vw,34px);font-weight:600;letter-spacing:-.03em;line-height:1.2;max-width:28em}
+.credit p.l span{color:var(--fg3)}
+@media(max-width:600px){.credit{grid-template-columns:1fr;gap:24px}.credit .mark{width:72px;height:72px}}
+.mark rect{animation:step 3s ease-in-out infinite}
+.mark rect:nth-child(2){animation-delay:.2s}.mark rect:nth-child(3){animation-delay:.4s}
+@keyframes step{0%,100%{transform:none}50%{transform:translateY(-6px)}}
+
+footer{border-top:1px solid var(--rule);padding-block:28px 40px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+/* ===== Color edition overrides ===== */
+body{background:var(--bg)}
+.hero{border-bottom:0}
+.hero h1{color:var(--ink)}
+.hero h1 span{display:inline-block;transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+
+.c1,.c2,.c3,.c4{color:var(--teal)}
+.kpi b{color:var(--ink)}
+.kpi b i{color:var(--teal)}
+.shapes{position:absolute;inset:0;pointer-events:none}
+.sh{position:absolute;display:block}
+.s1{width:clamp(120px,18vw,260px);aspect-ratio:1;border-radius:50%;background:var(--sun);opacity:.85;right:8%;top:14%;animation:fl 9s ease-in-out infinite}
+.s2{width:clamp(90px,12vw,180px);aspect-ratio:2/1;border-radius:999px 999px 0 0;background:var(--coral);right:30%;top:22%;animation:spin 18s linear infinite}
+.s3{width:clamp(60px,8vw,120px);aspect-ratio:1;background:var(--cobalt);right:16%;top:46%;transform:rotate(12deg);animation:fl 7s ease-in-out infinite reverse}
+.s4{width:0;height:0;border-left:clamp(40px,5vw,70px) solid transparent;border-right:clamp(40px,5vw,70px) solid transparent;border-bottom:clamp(70px,8.6vw,120px) solid var(--pink);right:40%;top:48%;animation:fl 11s ease-in-out infinite}
+.s5{width:clamp(140px,22vw,320px);aspect-ratio:1;border-radius:50%;border:1px solid var(--ink);right:2%;top:30%;animation:spin 30s linear infinite;border-style:dashed}
+@keyframes fl{50%{transform:translateY(-22px) rotate(8deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:700px){.s2,.s4{display:none}.s1{right:-6%;top:10%}.s3{right:10%;top:30%}.s5{right:-12%;top:16%}}
+.marquee{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--bg)}
+.marquee span{color:var(--fg3)}
+.marquee span::after{background:var(--teal);width:6px;height:6px}
+.sec-h h2 sup{color:var(--teal)}
+.w-num{-webkit-text-stroke:1px var(--rule2);color:transparent}
+.work:hover .w-num{-webkit-text-stroke-color:var(--accent)}
+.w-name{color:var(--ink)}
+.tag.live{color:#fff}
+.tag.live::before{background:#fff}
+.vis{background:color-mix(in srgb,var(--accent) 5%,#FCFBF9);border:1px solid var(--rule);border-radius:8px}
+
+.vis::after{background-image:radial-gradient(color-mix(in srgb,var(--accent) 35%,transparent) 1.2px,transparent 1.3px);background-size:22px 22px;opacity:.45}
+.vis .cap{color:color-mix(in srgb,var(--accent) 70%,#000)}
+svg text{fill:var(--fg2)}
+svg .ta{fill:color-mix(in srgb,var(--accent) 80%,#000)}
+.fp{fill:#fff;stroke:color-mix(in srgb,var(--accent) 40%,#fff)}
+.st{stroke:color-mix(in srgb,var(--accent) 30%,#fff)}
+.st2{stroke:color-mix(in srgb,var(--accent) 55%,#555)}
+.soon .w-num{-webkit-text-stroke:2px var(--accent);color:transparent}
+.soon-tag{color:var(--accent)}
+.tl{border-color:var(--rule2)}
+.tl::before{background:var(--teal);height:1px;top:-1px}
+.tl > div::before{border-color:var(--teal);background:var(--bg)}
+.tl .nx::before{border-style:dashed}
+.tl .nx .m{color:var(--teal)}
+.eco p.l{color:var(--ink)}
+.credit p.l{color:var(--ink)}
+footer{background:var(--ink)}
+footer .mono{color:#9A988F}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="RonApps home">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="64" width="26" height="26" fill="#2F7A72"/><rect x="37" y="37" width="26" height="26" fill="#2F7A72" opacity=".7"/><rect x="66" y="10" width="26" height="26" fill="#2F7A72" opacity=".42"/></svg>
+      RonApps
+    </a>
+    <nav aria-label="Sections"><a href="#work">Work</a><a class="opt" href="#next">Next</a><a class="opt" href="#system">System</a><a class="opt" href="#timeline">Timeline</a></nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <canvas id="art" aria-hidden="true"></canvas>
+    
+    <div class="wrap">
+      <h1 class="in">Ron<span class="c1">A</span><span class="c2">p</span><span class="c3">p</span><span class="c4">s</span></h1>
+      <div class="hero-foot">
+        <p class="l in d2"><b>Software that runs the business.</b> Apps for commercial HVAC teams, learning and everyday life.</p>
+        <div class="kpis in d3">
+          <div class="kpi"><b>9</b><span class="mono">Apps built</span></div>
+          <div class="kpi"><b>7<i>+</i></b><span class="mono">Business tools</span></div>
+          <div class="kpi"><b>5</b><span class="mono">Months</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="track" id="mq"></div></div>
+
+  <section class="sec" id="work">
+    <div class="wrap">
+      <div class="sec-h rv"><h2>Selected<br>work<sup>(09)</sup></h2><p class="mono">2026 — Present</p></div>
+
+      <div id="works">
+
+      <!-- 01 Pipeline -->
+      <article style="--accent:var(--teal)" class="work">
+        <div class="rv">
+          <div class="w-num">01</div>
+          <h3 class="w-name">MBT Project Pipeline</h3>
+          <p class="w-line">Every commercial AC project, from inquiry to delivery, in one live database.</p>
+          <div class="tags"><span class="tag live">Live</span><span class="tag">Quotations</span><span class="tag">Approvals</span><span class="tag">After-sales</span></div>
+          <a class="w-link" href="https://mbt-pipeline.netlify.app/" target="_blank" rel="noopener"><i></i>Open app</a>
+        </div>
+        <div class="vis rv"><span class="cap mono">Project funnel</span>
+          <svg viewBox="0 0 400 280" aria-label="Funnel from inquiry to delivery">
+            <g transform="translate(0,58)">
+              <text x="24" y="14">INQUIRY</text><rect class="grow fa" x="110" y="2" width="264" height="18" opacity=".95"/>
+              <text x="24" y="50">QUOTE</text><rect class="grow fa" x="110" y="38" width="214" height="18" opacity=".8"/>
+              <text x="24" y="86">APPROVAL</text><rect class="grow fa" x="110" y="74" width="168" height="18" opacity=".65"/>
+              <text x="24" y="122">AWARD</text><rect class="grow fa" x="110" y="110" width="122" height="18" opacity=".5"/>
+              <text x="24" y="158">DELIVERY</text><rect class="grow fa" x="110" y="146" width="88" height="18" opacity=".38"/>
+              <path class="st2 flow" d="M374 11 C392 11 392 155 198 155"/>
+            </g>
+            <text x="24" y="258" class="t3">POLICY CHECK ON EVERY QUOTE</text>
+            <circle cx="370" cy="254" r="4" class="fa pulse"/>
+          </svg>
+        </div>
+      </article>
+
+      <!-- 02 Sales Ops -->
+      <article style="--accent:var(--cobalt)" class="work">
+        <div class="rv">
+          <div class="w-num">02</div>
+          <h3 class="w-name">MBT Sales Operations</h3>
+          <p class="w-line">Plan the month. Report every visit. Customers sign off the minutes.</p>
+          <div class="tags"><span class="tag live">Live</span><span class="tag">Call plans</span><span class="tag">Field reports</span><span class="tag">Dashboards</span></div>
+          <a class="w-link" href="https://ronaldacedillo-coder.github.io/mbt-sales-app/" target="_blank" rel="noopener"><i></i>Open app</a>
+        </div>
+        <div class="vis rv"><span class="cap mono">Monthly call plan · AM / PM</span>
+          <svg viewBox="0 0 400 280" aria-label="Calendar of planned visits">
+            <g id="cal" transform="translate(54,56)"></g>
+            <g transform="translate(340,226)" class="pop"><circle r="18" class="fa"/><path d="M-7 0 l5 5 l9 -10" stroke="#0A0C0D" stroke-width="2.5" fill="none"/></g>
+          </svg>
+        </div>
+      </article>
+
+      <!-- 03 Polaris -->
+      <article style="--accent:var(--coral)" class="work">
+        <div class="rv">
+          <div class="w-num">03</div>
+          <h3 class="w-name">MBT × Polaris ERP</h3>
+          <p class="w-line">A distributor's stock, reserved and allocated to contractor projects through one ledger.</p>
+          <div class="tags"><span class="tag live">Deployed</span><span class="tag">Inventory</span><span class="tag">Contractor portal</span><span class="tag">Audit trail</span></div>
+          <a class="w-link" href="https://mbt-polaris-erp.vercel.app" target="_blank" rel="noopener"><i></i>Open app</a>
+        </div>
+        <div class="vis rv"><span class="cap mono">Stock ledger</span>
+          <svg viewBox="0 0 400 280" aria-label="Inventory moving through reserve, allocate and release">
+            <g transform="translate(22,0)">
+              <g id="stacks"></g>
+              <rect class="fp" x="0" y="168" width="76" height="34"/><text x="38" y="189" text-anchor="middle">STOCK</text>
+              <rect class="fp" x="94" y="168" width="76" height="34"/><text x="132" y="189" text-anchor="middle">RESERVE</text>
+              <rect class="fp" x="188" y="168" width="76" height="34"/><text x="226" y="189" text-anchor="middle">ALLOCATE</text>
+              <rect x="282" y="168" width="76" height="34" style="fill:color-mix(in srgb,var(--accent) 16%,#fff)" stroke="var(--accent)"/><text x="320" y="189" text-anchor="middle" class="ta">RELEASE</text>
+              <path id="lp" class="st2" d="M38 222 L320 222"/>
+              <path class="st" d="M76 185 H94 M170 185 H188 M264 185 H282"/>
+              <rect width="8" height="8" x="-4" y="-4" class="fa"><animateMotion dur="3.2s" repeatCount="indefinite" path="M38 222 L320 222"/></rect>
+              <text x="0" y="252" class="t3">EVERY MOVEMENT POSTED</text>
+            </g>
+          </svg>
+        </div>
+      </article>
+
+      <!-- 04 VRF Pipe -->
+      <article style="--accent:var(--sun)" class="work">
+        <div class="rv">
+          <div class="w-num">04</div>
+          <h3 class="w-name">VRF Pipe Length Tool</h3>
+          <p class="w-line">Trace refrigerant runs on a PDF plan. Get meters, not guesses. No AutoCAD.</p>
+          <div class="tags"><span class="tag live">Live</span><span class="tag">PDF takeoff</span><span class="tag">Design limits</span><span class="tag">Excel export</span></div>
+          <a class="w-link" href="https://ronaldacedillo-coder.github.io/vrf-pipe-tool/" target="_blank" rel="noopener"><i></i>Open app</a>
+        </div>
+        <div class="vis rv"><span class="cap mono">Plan trace</span>
+          <svg viewBox="0 0 400 280" aria-label="Pipe traced from outdoor unit to indoor units">
+            <path class="st" d="M40 50 H360 V240 H40 Z M150 50 V140 M260 50 V140 M40 140 H360 M200 140 V240"/>
+            <path class="sa draw" pathLength="1" d="M70 72 H205 V112 M205 112 H110 V180 M205 112 H310 V180 M205 112 V200 H250"/>
+            <path class="sa flow" style="opacity:.5" d="M70 72 H205 V112 H310 V180"/>
+            <rect x="56" y="60" width="26" height="24" class="fa"/><text x="56" y="100" class="ta">ODU</text>
+            <circle cx="205" cy="112" r="5" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
+            <g class="pop"><rect x="98" y="180" width="24" height="12" class="fp"/><rect x="298" y="180" width="24" height="12" class="fp"/><rect x="250" y="194" width="24" height="12" class="fp"/></g>
+            <text x="98" y="208">IDU</text><text x="298" y="208">IDU</text>
+            <path class="st2" d="M40 258 H160 M40 254 V262 M160 254 V262"/><text x="168" y="261" class="t3">CALIBRATED SCALE</text>
+            <text x="300" y="34" class="tw">Σ 48.6 m</text>
+          </svg>
+        </div>
+      </article>
+
+      <!-- 05 TCO -->
+      <article style="--accent:var(--pink)" class="work">
+        <div class="rv">
+          <div class="w-num">05</div>
+          <h3 class="w-name">MBT TCO Studio</h3>
+          <p class="w-line">Turns efficiency claims into lifecycle pesos a building owner can compare.</p>
+          <div class="tags"><span class="tag live">Live</span><span class="tag">Lifecycle cost</span><span class="tag">Part-load data</span><span class="tag">Brand library</span></div>
+          <a class="w-link" href="https://ronaldacedillo-coder.github.io/tco-studio/" target="_blank" rel="noopener"><i></i>Open app</a>
+        </div>
+        <div class="vis rv"><span class="cap mono">Cost of ownership · years</span>
+          <svg viewBox="0 0 400 280" aria-label="Two cumulative cost curves diverging over time">
+            <path class="st" d="M50 230 H370 M50 60 V230"/>
+            <path d="M50 200 L370 80 L370 140 L50 210 Z" fill="var(--accent)" opacity=".1"/>
+            <path class="st2 draw" pathLength="1" d="M50 200 L370 80" stroke-width="2"/>
+            <path class="sa draw" pathLength="1" d="M50 210 L370 140"/>
+            <circle cx="370" cy="80" r="4" fill="var(--fg3)"/><circle cx="370" cy="140" r="5" class="fa pulse"/>
+            <text x="300" y="70">OTHER VRF</text><text x="300" y="164" class="ta">VC MAX</text>
+            <path class="st2" d="M380 84 V136" stroke-dasharray="3 3"/>
+            <g class="t3"><text x="50" y="250" class="t3">Y1</text><text x="200" y="250" class="t3">Y5</text><text x="355" y="250" class="t3">Y10</text></g>
+          </svg>
+        </div>
+      </article>
+
+      <!-- 06 OKR -->
+      <article style="--accent:var(--green)" class="work">
+        <div class="rv">
+          <div class="w-num">06</div>
+          <h3 class="w-name">MBT OKR Tracker</h3>
+          <p class="w-line">Objectives, key results and incentive scores for every team member.</p>
+          <div class="tags"><span class="tag">Internal</span><span class="tag">OKRs</span><span class="tag">Incentive plan</span><span class="tag">Weighted scoring</span></div>
+        </div>
+        <div class="vis rv"><span class="cap mono">Scorecard</span>
+          <svg viewBox="0 0 400 280" aria-label="Concentric progress rings">
+            <g transform="translate(200,146) rotate(-90)">
+              <circle r="96" class="st" stroke-width="12"/><circle r="72" class="st" stroke-width="12"/><circle r="48" class="st" stroke-width="12"/>
+              <circle r="96" class="ring" pathLength="1" fill="none" stroke="var(--accent)" stroke-width="12" style="--o:.78" stroke-dasharray=".78 1"/>
+              <circle r="72" class="ring" pathLength="1" fill="none" stroke="var(--accent)" stroke-opacity=".7" stroke-width="12" style="--o:.62" stroke-dasharray=".62 1"/>
+              <circle r="48" class="ring" pathLength="1" fill="none" stroke="var(--accent)" stroke-opacity=".45" stroke-width="12" style="--o:.9" stroke-dasharray=".9 1"/>
+            </g>
+            <text x="200" y="150" text-anchor="middle" class="tw">SIP</text>
+            <text x="24" y="256" class="t3">OBJECTIVE · KEY RESULT · INCENTIVE</text>
+          </svg>
+        </div>
+      </article>
+
+      <!-- 07 ACS -->
+      <article style="--accent:var(--orange)" class="work">
+        <div class="rv">
+          <div class="w-num">07</div>
+          <h3 class="w-name">ACS Sales Operations</h3>
+          <p class="w-line">The Sales Ops model, rebuilt for a second team. Approvals follow the org chart.</p>
+          <div class="tags"><span class="tag">Rolling out</span><span class="tag">Org-chart routing</span><span class="tag">No-login sign-off</span><span class="tag">Weekly digests</span></div>
+        </div>
+        <div class="vis rv"><span class="cap mono">Approval routing</span>
+          <svg viewBox="0 0 400 280" aria-label="Approvals flowing from account managers up to leadership">
+            <path class="st" d="M200 72 L110 140 M200 72 L290 140 M110 140 L60 212 M110 140 L110 212 M110 140 L160 212 M290 140 L240 212 M290 140 L290 212 M290 140 L340 212"/>
+            <g fill="var(--accent)">
+              <rect width="6" height="6" x="-3" y="-3"><animateMotion dur="2.4s" repeatCount="indefinite" path="M60 212 L110 140 L200 72"/></rect>
+              <rect width="6" height="6" x="-3" y="-3"><animateMotion dur="2.4s" begin="-1.6s" repeatCount="indefinite" path="M290 212 L290 140 L200 72"/></rect>
+              <rect width="6" height="6" x="-3" y="-3"><animateMotion dur="2.4s" begin="-.8s" repeatCount="indefinite" path="M160 212 L110 140 L200 72"/></rect>
+            </g>
+            <rect x="170" y="56" width="60" height="30" class="fa"/><text x="200" y="75" text-anchor="middle" style="fill:#0A0C0D">HEAD</text>
+            <rect x="82" y="126" width="56" height="28" class="fp"/><text x="110" y="144" text-anchor="middle" class="tw">RSM</text>
+            <rect x="262" y="126" width="56" height="28" class="fp"/><text x="290" y="144" text-anchor="middle" class="tw">RSM</text>
+            <g id="kams"></g>
+          </svg>
+        </div>
+      </article>
+
+      <!-- 09 Chinese -->
+      <article style="--accent:var(--red)" class="work">
+        <div class="rv">
+          <div class="w-num">08</div>
+          <h3 class="w-name">Chinese Practice</h3>
+          <p class="w-line">Grade 1 Mandarin on iPad. Listen, trace with Apple Pencil, learn the tones.</p>
+          <div class="tags"><span class="tag">In use</span><span class="tag">13 topics</span><span class="tag">Stroke writing</span><span class="tag">Pinyin</span></div>
+        </div>
+        <div class="vis rv"><span class="cap mono">田字格 practice grid</span>
+          <svg viewBox="0 0 400 280" aria-label="Character written on a practice grid">
+            <g transform="translate(120,50)">
+              <rect width="160" height="160" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+              <path class="st2" stroke-dasharray="4 5" d="M80 0 V160 M0 80 H160"/>
+              <text x="80" y="134" text-anchor="middle" style="font-family:'PingFang SC','Hiragino Sans GB','Noto Sans SC',serif;font-size:118px;letter-spacing:0;fill:var(--fg)" class="pop">学</text>
+            </g>
+            <text x="200" y="38" text-anchor="middle" class="ta" style="font-size:14px">xué</text>
+            <g transform="translate(58,232)"><text class="t3">LISTEN</text><text x="62" class="t3">WRITE</text><text x="118" class="tw">STROKES</text><text x="186" class="t3">PINYIN</text><text x="246" class="t3">REVIEW</text></g>
+          </svg>
+        </div>
+      </article>
+
+      <!-- 10 HealthOS -->
+      <article style="--accent:var(--green)" class="work">
+        <div class="rv">
+          <div class="w-num">09</div>
+          <h3 class="w-name">HealthOS</h3>
+          <p class="w-line">Tiny daily habits that compound. Consistency over streaks, and no shame.</p>
+          <div class="tags"><span class="tag">In development</span><span class="tag">iOS · Android</span><span class="tag">Habit coach</span><span class="tag">22-part blueprint</span></div>
+        </div>
+        <div class="vis rv"><span class="cap mono">Rolling 28 days</span>
+          <svg viewBox="0 0 400 280" aria-label="Grid of daily habit check-ins">
+            <g id="dots" transform="translate(42,72)"></g>
+            <g transform="translate(316,140) rotate(-90)">
+              <circle r="44" class="st" stroke-width="8"/>
+              <circle r="44" class="ring" pathLength="1" fill="none" stroke="var(--accent)" stroke-width="8" stroke-linecap="round" style="--o:.75" stroke-dasharray=".75 1"/>
+            </g>
+            <text x="316" y="144" text-anchor="middle" class="tw" style="font-size:16px">75%</text>
+            <text x="276" y="212" class="t3">CONSISTENCY</text>
+          </svg>
+        </div>
+      </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section class="sec" id="next">
+    <div class="wrap">
+      <div class="sec-h rv"><h2>Coming<br>next</h2><p class="mono">In the studio</p></div>
+      <article style="--accent:var(--cobalt)" class="work soon">
+        <div class="rv">
+          <div class="w-num">10</div>
+          <h3 class="w-name">MBT HVAC Design</h3>
+          <p class="w-line">Commercial HVAC system design, from floor plan to equipment selection, in the browser.</p>
+          <div class="tags"><span class="tag soon-tag">Coming soon</span><span class="tag">Load estimates</span><span class="tag">VRF selection</span><span class="tag">System layout</span></div>
+        </div>
+        <div class="vis rv"><span class="cap mono">Zones · loads · units</span>
+          <svg viewBox="0 0 400 280" aria-label="Floor plan zones shaded by cooling load with indoor units placed">
+            <g transform="translate(40,44)">
+              <rect class="pop" x="0" y="0" width="130" height="90" fill="var(--accent)" opacity=".55"/>
+              <rect class="pop" x="130" y="0" width="90" height="90" fill="var(--accent)" opacity=".3"/>
+              <rect class="pop" x="220" y="0" width="100" height="90" fill="var(--accent)" opacity=".8"/>
+              <rect class="pop" x="0" y="90" width="90" height="100" fill="var(--accent)" opacity=".18"/>
+              <rect class="pop" x="90" y="90" width="140" height="100" fill="var(--accent)" opacity=".42"/>
+              <rect class="pop" x="230" y="90" width="90" height="100" fill="var(--accent)" opacity=".25"/>
+              <path class="st2" d="M0 0 H320 V190 H0 Z M130 0 V90 M220 0 V90 M0 90 H320 M90 90 V190 M230 90 V190"/>
+              <g fill="var(--bg)" stroke="var(--fg)" stroke-width="1.2">
+                <rect x="53" y="38" width="24" height="12"/><rect x="163" y="38" width="24" height="12"/><rect x="258" y="30" width="24" height="12"/><rect x="258" y="52" width="24" height="12"/>
+                <rect x="33" y="134" width="24" height="12"/><rect x="148" y="128" width="24" height="12"/><rect x="148" y="150" width="24" height="12"/><rect x="263" y="134" width="24" height="12"/>
+              </g>
+              <path class="sa flow" d="M320 20 H340 V170 H320" />
+              <rect x="334" y="80" width="18" height="30" class="fa"/>
+            </g>
+            <text x="40" y="258" class="t3">LOW</text>
+            <rect x="76" y="250" width="80" height="8" fill="url(#ld)"/>
+            <text x="164" y="258" class="t3">HIGH LOAD</text>
+            <defs><linearGradient id="ld"><stop offset="0" stop-color="#55657A" stop-opacity=".12"/><stop offset="1" stop-color="#55657A" stop-opacity=".85"/></linearGradient></defs>
+            <circle cx="362" cy="254" r="4" class="fa pulse"/>
+          </svg>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" id="system">
+    <div class="wrap">
+      <div class="sec-h rv"><h2>One<br>system</h2><p class="mono">Shared data · single sign-on</p></div>
+      <div class="eco">
+        <p class="l rv">Enter an account once. <em style="color:var(--teal)">Every MBT app sees it</em>, under one set of access rules.</p>
+        <div class="vis rv" style="--accent:var(--teal)">
+          <svg viewBox="0 0 480 320" aria-label="Apps connected to a shared database">
+            <g class="st"><circle cx="210" cy="160" r="96" stroke-dasharray="2 6"/></g>
+            <path class="sa flow" d="M210 160 L90 70 M210 160 L330 70 M210 160 L90 250 M210 160 L330 250"/>
+            <g fill="var(--accent)">
+              <circle r="4"><animateMotion dur="2s" repeatCount="indefinite" path="M90 70 L210 160"/></circle>
+              <circle r="4"><animateMotion dur="2s" begin="-1.5s" repeatCount="indefinite" path="M330 70 L210 160"/></circle>
+              <circle r="4"><animateMotion dur="2s" begin="-1s" repeatCount="indefinite" path="M90 250 L210 160"/></circle>
+              <circle r="4"><animateMotion dur="2s" begin="-.5s" repeatCount="indefinite" path="M330 250 L210 160"/></circle>
+            </g>
+            <circle cx="210" cy="160" r="40" fill="#2F7A72"/>
+            <text x="210" y="157" text-anchor="middle" style="fill:#fff;font-weight:500">SHARED</text>
+            <text x="210" y="171" text-anchor="middle" style="fill:#fff;font-weight:500">DATA</text>
+            <g>
+              <rect x="40" y="52" width="100" height="36" fill="#1A1A1A"/><text x="90" y="74" text-anchor="middle" style="fill:#fff;font-weight:500">PIPELINE</text>
+              <rect x="280" y="52" width="100" height="36" fill="#1A1A1A"/><text x="330" y="74" text-anchor="middle" style="fill:#fff;font-weight:500">SALES OPS</text>
+              <rect x="40" y="232" width="100" height="36" fill="#1A1A1A"/><text x="90" y="254" text-anchor="middle" style="fill:#fff;font-weight:500">TCO STUDIO</text>
+              <rect x="280" y="232" width="100" height="36" fill="#1A1A1A"/><text x="330" y="254" text-anchor="middle" style="fill:#fff;font-weight:500">OKR</text>
+            </g>
+            <g>
+              <rect x="400" y="120" width="68" height="30" fill="none" stroke="var(--fg3)" stroke-dasharray="3 3"/><text x="434" y="139" text-anchor="middle" class="t3">POLARIS</text>
+              <rect x="400" y="170" width="68" height="30" fill="none" stroke="var(--fg3)" stroke-dasharray="3 3"/><text x="434" y="189" text-anchor="middle" class="t3">ACS</text>
+              <text x="434" y="222" text-anchor="middle" class="t3" style="font-size:9px">OWN DATA</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="timeline">
+    <div class="wrap">
+      <div class="sec-h rv"><h2>Five<br>months</h2><p class="mono">Release log · 2026 → next</p></div>
+      <div class="tl rv">
+        <div><p class="m">Jun</p><ul><li>Project Pipeline</li></ul></div>
+        <div><p class="m">Jul</p><ul><li>Sales Operations</li><li>VRF Pipe Tool</li><li>Chinese Practice</li></ul></div>
+        <div><p class="m">Aug</p><ul><li>Polaris ERP</li><li>OKR Tracker</li><li>HealthOS</li></ul></div>
+        <div><p class="m">Sep</p><ul><li>TCO Studio</li></ul></div>
+        <div><p class="m">Oct</p><ul><li>ACS Sales Ops</li></ul></div>
+        <div class="nx"><p class="m">Next</p><ul><li>HVAC Design</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-block:80px 40px">
+    <div class="credit rv">
+      <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="64" width="26" height="26" fill="#2F7A72"/><rect x="37" y="37" width="26" height="26" fill="#2F7A72" opacity=".7"/><rect x="66" y="10" width="26" height="26" fill="#2F7A72" opacity=".42"/></svg>
+      <p class="l">Designed and built by Ronald Acedillo. <span>Engineer, MBA, and Head of Commercial AC at Concepcion Midea.</span></p>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span class="mono">© 2026 RonApps</span><span class="mono">Quezon City, Philippines</span></div></footer>
+
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e;}
+
+  // Marquee
+  var names=['Project Pipeline','Sales Operations','Polaris ERP','VRF Pipe Tool','TCO Studio','OKR Tracker','ACS Sales Ops','Chinese Practice','HealthOS'];
+  var mq=document.getElementById('mq'),h='';
+  for(var r=0;r<2;r++)names.forEach(function(n){h+='<span>'+n+'</span>';});
+  mq.innerHTML=h;
+
+  // Calendar
+  var cal=document.getElementById('cal');
+  ['M','T','W','T','F','S','S'].forEach(function(d,i){var t=el('text',{x:i*42+12,y:-10,class:'t3'},cal);t.textContent=d;});
+  for(var w=0;w<5;w++)for(var d=0;d<7;d++){
+    var x=d*42,y=w*36,on=d<5&&((w*7+d)*37%7)<5,pm=d<5&&((w*7+d)*53%5)<3;
+    el('rect',{x:x,y:y,width:38,height:15,fill:on?'var(--accent)':'var(--panel2)',opacity:on?.9:1,class:on?'pop':''},cal);
+    el('rect',{x:x,y:y+17,width:38,height:15,fill:pm?'var(--accent)':'var(--panel2)',opacity:pm?.45:1,class:pm?'pop':''},cal);
+  }
+
+  // Ledger stacks
+  var st=document.getElementById('stacks');
+  [6,4,3,2].forEach(function(n,i){for(var k=0;k<n;k++){el('rect',{x:i*94+26,y:150-k*16,width:24,height:12,fill:'var(--accent)',opacity:(.95-i*.18).toFixed(2),class:'pop'},st);}});
+
+  // KAMs
+  var km=document.getElementById('kams');
+  [60,110,160,240,290,340].forEach(function(x){el('rect',{x:x-22,y:212,width:44,height:24,class:'fp'},km);var t=el('text',{x:x,y:228,'text-anchor':'middle'},km);t.textContent='KAM';});
+
+  // Habit dots
+  var dots=document.getElementById('dots');
+  for(var r2=0;r2<4;r2++)for(var c=0;c<7;c++){
+    var i2=r2*7+c,v=((i2*29+7)%10);var on2=v<7||i2>23;
+    el('rect',{x:c*30,y:r2*30,width:20,height:20,fill:on2?'var(--accent)':'none',stroke:on2?'none':'var(--rule2)',opacity:on2?(0.4+0.6*(i2/27)).toFixed(2):1,class:'pop'},dots);
+  }
+
+  // Hero art: rising squares field
+  var PAL=['#2F7A72'];
+  var cv=document.getElementById('art'),ctx=cv.getContext('2d');
+  var W,H,dpr,mx=-1e4,my=-1e4,still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function size(){dpr=Math.min(window.devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+  size();window.addEventListener('resize',size);
+  cv.parentElement.addEventListener('pointermove',function(e){var r=cv.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top;});
+  cv.parentElement.addEventListener('pointerleave',function(){mx=my=-1e4;});
+  function frame(t){
+    t=t*0.00045;ctx.clearRect(0,0,W,H);
+    var g=W<600?22:30,cols=Math.ceil(W/g)+1,rows=Math.ceil(H/g)+1;
+    for(var i=0;i<cols;i++)for(var j=0;j<rows;j++){
+      var x=i*g,y=j*g,nx=x/W,ny=y/H;
+      var band=Math.max(0,Math.min(1,(nx-.28)*1.7))*(.55+.45*(1-ny));
+      var wave=Math.sin((i-j)*.38-t*3)*.5+.5; wave=wave*wave*(.6+.4*Math.sin(j*.21+t*1.3));
+      var dx=x-mx,dy=y-my,m=Math.max(0,1-Math.sqrt(dx*dx+dy*dy)/180);
+      var v=Math.max(0,Math.min(1,band*wave+m*.9));
+      if(v<.06)continue;
+      var s=(g-6)*Math.min(1,v*1.15);
+      var pc=PAL[((i*7+j*3)%PAL.length)];ctx.globalAlpha=Math.min(.35,v*.32);ctx.fillStyle=pc;
+      ctx.fillRect(x+(g-s)/2,y+(g-s)/2,s,s);
+    }
+    ctx.globalAlpha=1;if(!still)requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
