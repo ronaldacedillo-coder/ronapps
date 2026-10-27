@@ -211,6 +211,11 @@ svg .ta{fill:color-mix(in srgb,var(--accent) 80%,#000)}
 .credit p.l{color:var(--ink)}
 footer{background:var(--ink)}
 footer .mono{color:#9A988F}
+.who{display:flex;flex-direction:column;gap:10px;min-width:0}
+.who-role{color:var(--teal)}
+.who-name{color:var(--ink)}
+.who-tag{font-size:clamp(15px,1.5vw,18px);color:var(--fg2);line-height:1.5}
+.who-tag i{font-style:normal;color:var(--rule2);margin:0 6px}
 </style>
 
 </head>
@@ -548,7 +553,11 @@ footer .mono{color:#9A988F}
   <section class="wrap" style="padding-block:80px 40px">
     <div class="credit rv">
       <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="64" width="26" height="26" fill="#2F7A72"/><rect x="37" y="37" width="26" height="26" fill="#2F7A72" opacity=".7"/><rect x="66" y="10" width="26" height="26" fill="#2F7A72" opacity=".42"/></svg>
-      <p class="l">Designed and built by Ronald Acedillo. <span>Engineer, MBA, and Head of Commercial AC at Concepcion Midea.</span></p>
+      <div class="who">
+        <p class="mono who-role">Head of Software Development:</p>
+        <p class="l who-name">Ronald Acedillo</p>
+        <p class="who-tag">Business Transformation Leader <i>|</i> AI-Enabled Operations <i>|</i> Digital Strategy &amp; Automation</p>
+      </div>
     </div>
   </section>
 </main>
